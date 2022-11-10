@@ -15,10 +15,10 @@ import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.URL;
 
-public class DriverGrid {
+public class Driver {
     static String browser;
 
-    private DriverGrid() {
+    private Driver() {
     }
 
     private static WebDriver driver;
