@@ -1,0 +1,428 @@
+
+Day 02  -- CI /CD
+
+ - Review  --> https://miro.com/app/board/uXjVPUec-XE=/
+
+
+
+ FREE TIER 
+
+ 	- It is free if you have only one server (750 hours)
+ 	- t2micro 
+ 	- 30 GB 
+ 	- 1 CPU + 1 GB 
+
+
+
+
+
+ - Project --> https://github.com/mehmetCt/demo-project
+
+	Q: Why we are using project from my repository ? 
+
+
+	- In that repository we have 1 smoke 1 regression to make practice with Jenkins.Since  Jenkins machine has low performance (1 CPU , 1 GB RAM ), instead of waiting execution time  we can make more practice with that project 
+
+
+
+--- HOMEWORK --- 
+
+	Q: Are we gonna go through private git project?
+
+	- I will publish short video about it.You can try by yourself.If you have any issue you can contact me 
+
+	How to clone project in your local and push to github? 
+		- Clone it in your local
+		- Push to the your github repository 
+		- Make it PRIVATE 
+			- Settings 
+			- Scroll bottom to DANGERZONE 
+			- Select PRIVATE 
+			- Follow short video 
+
+
+
+ Q: What is Jenkins Job ? 
+
+ 	- DevOPs --> Manage CI / CD pipeline
+ 	- TESTER --> Schedule jobs 
+ 			- FirstProject - Smoke job 
+ 			- SecondProject - Regression job 
+ 
+
+ Jenkins Jobs For Practice 
+
+
+
+
+     ======= FREESTYLE PROJECTS  =======
+ 
+
+ 	1- first-project
+ 		  - cucumber report
+
+
+ 		  STEPS 
+ 		  1- New Item 
+ 		  2- My-first-project
+ 		  3- FreeStyle Project
+ 		  4- Click OK 
+
+ 		  	Configuration 
+
+ 		  		1- Source Code Management (SCM ) --> We need to put which project we need to run 
+ 		  										  https://github.com/mehmetCt/demo-project
+
+ 		  			with the help of JGit it will clone project into Jenkins Server Workspace to run 
+
+ 		  			- Branches to build
+ 		  				- We have master branch to run test.That is why we are not changing from here 
+
+ 		  		2- Build 
+ 		  		
+ 		  			- Click Dropdown
+ 		  			- Choose Invoke Top Level Maven Targets 
+ 		  			- Maven version 
+ 		  					- M3 
+ 		  					- Goals --> test (since it is already maven we dont need to emphasize mvn keyword)	
+
+
+
+ 		  			Q : How to run project into Jenkins ? 
+ 		  				With the hlep build we are using maven and maven lifecyle commands to run test cases 
+
+ 		  				it will trigger Runner class for executions 
+ 		  					<build>
+						        <plugins>
+						            <plugin>
+						                <groupId>org.apache.maven.plugins</groupId>
+						                <artifactId>maven-surefire-plugin</artifactId>
+						                <version>3.0.0-M5</version>
+						                <configuration>
+						                  <!--  <parallel>methods</parallel>
+						                    <threadCount>4</threadCount>-->
+						                    <testFailureIgnore>true</testFailureIgnore>
+						                    <includes>
+						                        <include>**/*Runner.java</include>
+						                    </includes>
+						                </configuration>
+						            </plugin>
+						        </plugins>
+						    </build>		
+
+ 		  		3- POST Build Actions 
+
+ 		  			- Cucumber Report 
+
+ 		  			To get Cucumber report cucumber plugin looking for any "**/*.json" plugin in your project
+ 		  			That is why we added 
+
+ 		  				"json:target/cucumber.json",
+
+ 		  				 plugin to get CUCUMBER REPORT 
+
+
+ 		  		4- Apply and SAVE 
+ 		  		
+ 		  		5- Build NOW ! 
+
+
+
+ 	Cucumber Options --> https://cucumber.io/docs/cucumber/api/?lang=java#options
+
+ 	cucumber.ansi-colors.disabled=  # true or false. default: false
+	cucumber.execution.dry-run=     # true or false. default: false
+	cucumber.execution.limit=       # number of scenarios to execute (CLI only).
+	cucumber.execution.order=       # lexical, reverse, random or random:[seed] (CLI only). default: lexical
+	cucumber.execution.wip=         # true or false. default: false.
+	cucumber.features=              # comma separated paths to feature files. example: path/to/example.feature, path/to/other.feature
+	cucumber.filter.name=           # regex. example: .*Hello.*
+	cucumber.filter.tags=           # tag expression. example: @smoke and not @slow
+	cucumber.glue=                  # comma separated package names. example: com.example.glue
+	cucumber.plugin=                # comma separated plugin strings. example: pretty, json:path/to/report.json
+	cucumber.object-factory=        # object factory class name. example: com.example.MyObjectFactory
+	cucumber.snippet-type=          # underscore or camelcase. default: underscore
+
+
+
+    Q: How Jenkins works ? 
+    
+    - 		   
+
+ 	2- smoke-project 
+ 		  1- SCM 
+ 		  	- Git --> https://github.com/mehmetCt/demo-project
+
+
+ 		  How to add Build Trigger already existing project ? 
+
+ 		  	- Right click over project 
+ 		  	- Click configure 
+ 		  	- Click Build Triggers 
+ 		  	- Add schedule 
+ 		  	- Apply and SAVE 
+
+ 		  2- Build Triggers 
+
+ 		  		schedule with cron expression --> https://crontab.guru/
+
+
+ 		  		At 05:00 AM --> 0 5 * * *
+
+ 		  		H 5 * * * -> H will optimize Jenkins server performance to run around specified time 
+
+ 		  		Q: How to run at 2:15 everyday 
+
+ 		  			- 15 2 * * * 
+
+ 		  		Q: How can we schedule accordingto local time zone ? 
+ 		  		    - TZ=US/Eastern
+
+ 		  		
+ 		  		Q: Can we add more than one schedule  ? 
+					- Yes  
+
+ 		  			- Schedule 
+ 		  				- each Sundays at 21:00
+
+ 		  				- each weekdays at 01:00     
+ 		  				
+ 		  			- Yes 
+ 						 TZ=US/Eastern
+ 						 0 1 * * 1-5 
+ 						 0 21 * * 0
+
+ 		  3- smoke 
+
+ 		  		- Click Build --> Invoke Top Level Maven Targets 
+ 		  		- M3
+ 		  		- Goals --> test -Dcucumber.filter.tags=@smoke
+
+ 		  4- cucumber report 
+
+ 		  		- Click Post Build Action 
+ 		  		- Click Cucumber Report 
+ 		  - Apply and SAVE 
+ 		  - Click Build Now 
+
+ 	3- regression-project
+ 		  - regression
+ 		  - cucumber report 
+ 		
+ 		1- SCM 
+ 		  	- Git --> https://github.com/mehmetCt/demo-project
+
+
+ 		2- Build Triggers 
+ 				- Build after other projects are built
+
+ 					my-smoke-project (trigger if the build stable )
+  	
+
+		3- regression 
+
+ 		  		- Click Build --> Invoke Top Level Maven Targets 
+ 		  		- M3
+ 		  		- Goals --> test -Dcucumber.filter.tags=@regression
+
+ 		4- cucumber report 
+
+ 		  		- Click Post Build Action 
+ 		  		- Click Cucumber Report 
+ 		  - Apply and SAVE 
+ 		  - Click Build Now 
+
+
+
+
+ 	NOTES : 
+ 		-- Build after other projects are built --
+
+ 		  	- if you wanna trigger regression after smoke test you can use this trigger option to do it 
+
+ 		  	  NOTE --> This is use case for CI.After getting Test Environment, we can schedule smoke , smoke will trigger regression for deployment process 
+
+
+ 		Q:if smoke will trigger regression, smoke  will run everyday is it going to trigger regression everyday?
+
+ 			Daily Smoke Job --> it is for daily executions 
+
+ 			DeploymentSmokeJob--> After this execution it will trigger regression 
+
+
+ 	Q: Why do we need to do all this in Jenkins? What’s the point of running the smoke and regression on remote server?
+		
+ 		-- Assume that you 15 feature for all regression.You are trying to run in your local parallelyç 
+ 		   How many browser will open ---> 15 
+
+
+
+
+
+
+    ======= PIPELINES =======
+
+    NOTE : You dont need to write pipeline scripts by yourself.It is written in Groovy Lang.We just need to know 
+    what is structure and in some cases maybe we need to update related parts (repository or tags) 
+
+
+    Difference between pipeline and freestyle projects ? 
+
+    	Freestyle --> it is just simple jobs.We can add triggers to run jobs 
+    	Pipeline --> it is for more complex jobs.There can many stages and maybe these stages needs to run paralell too 
+    			     For the deploymeny process pipelince script will be written from DevOps
+
+ 	
+
+ 	4- smoke-project-pipeline-script
+ 		  - smoke 
+ 		  - cucumber report	 
+
+
+ 		  node {
+			    stage('Clone code') {
+			        git 'https://github.com/mehmetCt/demo-project.git'
+			        // change your repository 
+			    }
+
+			    stage('Run tests'){
+			        if(isUnix()){
+			            sh "mvn clean test"
+			            /*
+			            - sh refers shell commands
+                        - Unix OS --> MacOS or Linux 
+			            */
+			        } else {
+			            bat "mvn clean test -Dcucumber.filter.tags=\"@smoke\" "
+			            //windows will use batch command
+			        }
+
+			    }
+
+			    stage('Generate report'){
+			           cucumber failedFeaturesNumber: -1,
+			            failedScenariosNumber: -1,
+			            failedStepsNumber: -1,
+			            fileIncludePattern: '**/*.json',
+			            pendingStepsNumber: -1,
+			            skippedStepsNumber: -1,
+			            sortingMethod: 'ALPHABETICAL',
+			            undefinedStepsNumber: -1
+			    }
+		}
+
+ 
+ 	5- regression-project-pipeline-SCM 
+ 		  - regression 
+ 		  - cucumber report	  	
+
+ 		  - Create pipeline job called as my  regression-pipeline
+
+ 		  - Click Pipeline --> Definiton Dropdown --> Choose from SCM 
+
+ 		  - Select SCM 
+ 		  			- Git URL --> https://github.com/mehmetCt/demo-project
+
+ 		  - Scripth path 
+
+ 		  			- jenkinsfile
+ 		  - Apply and Save 
+ 		  - Build Now 			
+
+
+    Q :Do we need to push everything to github before running test in Jenkins?
+
+    	- Yes . Jenkins will clone project from GITHUB for execution.
+
+
+
+
+
+
+
+ 	======= CUCUMBER-CLASS-PROJECT Jenkins Implementation  =======
+	  
+
+ 	- Update Project to run in Jenkins Server 
+ 	- Create smoke project to run 
+
+ 	How to clone project ? 
+ 	- Click File - New - New From VCS 
+ 	- Paste Url that you wanan clone 
+ 	- Click Clone 
+    
+
+    How to cut connection between repositories? 
+
+    - Click Git 
+    - Manage Remotes 
+    - Click over remote repo
+    - Click - sign to delete
+    
+	How to push ? 
+
+	- Git --> Github --> Share on Github 
+
+
+	Create new freestyle job called as my-cucumber-smoke-project 
+
+
+
+
+	ERROR --> net.masterthought.cucumber.ValidationException: No JSON report file was found!
+
+	How to fix ? 
+		- Add plugin in CukesRunner
+
+		 "json:target/cucumber.json",
+
+
+    Questions 
+
+    	1- How to run smoke jobs ? 
+    	2- Is it possible to do parallel execution in Jenkins Server? 
+    	3- In real Project will we run test into Jenkins Server ? 
+
+
+
+
+
+Q: Can we run our project into Jenkins Server ? 
+
+	- Yes 
+
+		1- Make sure you have following plugin in Cukes Runner.Cucumber plugin from Jenkins will looking for **/*.json file to create report  
+
+			 "json:target/cucumber.json",
+
+	    2- Also you need to have maven-surefire-plugin to execute maven goals from Jenkins
+
+ 	HOMEWORKS 
+
+ 		- Create a smoke job 
+ 			- https://github.com/mehmetCt/cucumber-junit-project
+ 			- Run smoke everyday at 5.17 AM 
+ 			- Get report 
+
+ 		- Create a smoke job with pipeline SCM (Source Code Management)
+ 			- https://github.com/mehmetCt/cucumber-junit-project
+ 			- jenkinsfile
+ 			- Run smoke everyday at 4.20 AM 
+ 			- Get report 	
+
+ 		- Short videos --> To trigger Jenkins job from Github Repository 
+ 		               --> Running private repository from Jenkins 
+
+ 		               --> How to create Selenium Grid Server ? 
+ 		               	   -- DONT CREATE JUST WATCH IT 
+
+
+
+
+
+
+
+
+
+
+

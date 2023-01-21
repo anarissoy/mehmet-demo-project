@@ -1,0 +1,337 @@
+
+
+
+DAY 04 Selenium Grid 
+
+	- Review 
+
+
+	- Create Grid Server 
+
+	  - Create Key Pair
+
+		  - Dont delete or open this file.When you try to login from local it will ack to give access 
+
+			- By default 22 port for SSH connection from Linux 
+			- SSH use 2 keys 
+
+				- private key --> gridserver.pem 
+				- public key  --> gridserver.pem 
+
+			- When you try to login it check your private key.If it is correct with public one it will give access
+
+
+
+
+
+
+	
+	- Demo-Project 
+	    
+		INTELLIJ 
+
+	    1-  Trigger from Intellij to run in Selenium Grid 
+
+
+	    	CASE -- REMOTE-CHROME 
+
+	    		case "remote-chrome":
+                    try {
+                        // assign your grid server address
+                        String gridAddress = "174.129.57.204";
+                        URL url = new URL("http://" + gridAddress + ":4444/wd/hub");
+                        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+                        desiredCapabilities.setBrowserName("chrome");
+                        driver = new RemoteWebDriver(url, desiredCapabilities);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+
+
+
+                    				WebDriver (Interface)
+                    				 || 
+                    			RemoteWebDriver (ProtectedClass)
+                    			     ||
+                    	ChromeDriver.   FirefoxDriver  .............. (Class)
+
+
+
+                - configuration properties 
+                	browser --> remote-chrome
+                
+                - Update Driver 
+                	remote-case 
+
+                		IP will be YOURGRIDPUBLICIP
+
+                - Run from CukesRunner 		
+
+
+
+
+        Q: I will trigger code excution from intellij to run in Selenium Grid Server? 
+           
+           Conf.properties 
+           			browser=remote-chrome 
+
+
+        2- Can we MAVEN to trigger tests from Intellij to run Selenium Grid without changing condig.properties 	        
+
+	    		
+	    	- Trigger from Jenkins to run in Selenium Grid 
+
+
+	    	ConfigurationReader.getProperty("browser") ---> chrome 
+
+
+	    	System.getProperty("key") --> will give value of key that is defined as System property 
+
+
+
+
+	    	if (System.getProperty("BROWSER") == null) {
+                browser = ConfigurationReader.getProperty("browser");
+            } else {
+                browser = System.getProperty("BROWSER");
+            }
+
+            -D --> To define System Property
+
+
+            mvn test -Dcucumber.filter.tags=@smoke -DBROWSER=remote-chrome
+
+
+            -DBROWSER ---> it is key to define systemProperty
+            - remote-chrome ---> value for key 
+            - System.getProperty("BROWSER")--> will read data from System Key as BROWSER 
+			- browser = System.getProperty("BROWSER") 
+				browser = remote-chrome 
+
+
+--------SG EXECUTIONS --------------
+		INTELLIJ 
+			1- CukesRunner
+					- config.properties 
+							browser=remote-chrome
+
+				 	- we have Driver class
+				 		- remote-chrome
+				 		- PUT your grid IP 
+				- Click Run button from CukesRunner
+
+			2- MAVEN 
+				- config.properties 
+							browser=chrome
+
+
+				- mvn test -Dcucumber.filter.tags=@smoke -DBROWSER=remote-chrome
+
+			    - Driver Class has this statement to get browser type from system variables 
+
+			    	if (System.getProperty("BROWSER") == null) {
+		                browser = ConfigurationReader.getProperty("browser");
+		            } else {
+		                browser = System.getProperty("BROWSER");
+		            }
+
+
+		            NOTE --> 
+		            	-D --> Define System Property 
+		            	-System.getProperty("BROWSER") --> will give remote-chrome 
+
+		           -- It will not change value from config file 
+
+-----------------------------------		         
+		        NOTE : You need to run your test from maven 
+
+		        	mvn test -Dusername=librarian43 
+
+		         login(){
+		         
+		         	// loginField.sendKeys(ConfigurationReader.getProperty("username"));
+		         	loginField.sendKeys(System.getProperty("username"));
+
+
+		         }   	
+
+-----------------------------------		         
+		       
+
+
+	    JENKINS 
+
+	    	Trigger from Jenkins to run in Selenium Grid
+
+	    	1- Create Jenkins JOB as FreeStyle 
+	    	2- Give a name jenkins-with-grid 
+	    	3- Click OK 
+	    	4- SCM -->https://github.com/mehmetCt/demo-project
+	    	5- Build--> Invoke Top Level Maven Targets
+	    		M3 
+	    		test -Dcucumber.filter.tags=@smoke  -DBROWSER=remote-chrome
+
+	    		NOTE : in Github project browser was chrome.To change browser type from maven we used -DBROWSER=remote-chrome
+	    			    Driver class will run if statement to assgin browser value as remote-chrome
+
+	    		FLOW:
+	    		1-  Jenkins will clone project from Github
+	    		2- It will run mvn command 
+	    		3- in mvn commands we have -DBROWSER=remote-chrome
+	    		4-While driver is running it will run remote-chrome to sent test execution to the SG 
+	    		5- After execution DONE we are gonna get report from JENKINS 
+
+
+	    	6- POST build Actions --> CucumberReport
+	    	7- Apply And Save
+	    	8- Build NOW 
+
+	    	9- DONT USE MINE 	
+
+	    		
+	
+	
+
+	    - Cucumber Class Project Implementation 
+
+
+                What I need to run in Selenium Grid ?
+
+                    - Remote browsers
+                        case "remote-chrome":
+                    try {
+                        // assign your grid server address
+                        String gridAddress = "174.129.57.206";
+                        URL url = new URL("http://"+ gridAddress + ":4444/wd/hub");
+                        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+                        desiredCapabilities.setBrowserName("chrome");
+                        driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
+                        //driverPool.set(new RemoteWebDriver(new URL("http://0.0.0.0:4444/wd/hub"),desiredCapabilities));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "remote-firefox":
+                    try {
+                        // assign your grid server address
+                        String gridAddress = "174.129.57.20";
+                        URL url = new URL("http://"+ gridAddress + ":4444/wd/hub");
+                        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+                        desiredCapabilities.setBrowserName("firefox");
+                        driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
+                        //driverPool.set(new RemoteWebDriver(new URL("http://0.0.0.0:4444/wd/hub"),desiredCapabilities));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                    - Add System env to ready browser type --DONE
+                            String browserType="";
+                            if(System.getProperty("BROWSER")==null){
+                                browserType = ConfigurationReader.getProperty("browser");
+                            }else {
+                                browserType=System.getProperty("BROWSER");
+                            }
+
+
+
+          
+
+
+
+
+		    - Trigger from Intellij to run in Selenium Grid 
+
+		    					
+
+
+		    		
+		    - Trigger from Jenkins  to run in Selenium Grid 
+	 			
+		    		1- Craete job called as cucumber-with-grid freestyle
+		    		2- Scm --> Git --> https://github.com/mehmetCt/cucumber-junit-project
+		    		3- Build 
+		    			- Invoke Top Level Maven Targets 
+		    				M3 
+		    				test -Dcucumber.filter.tags=@smoke -DBROWSER=remote-chrome
+		    		4- POST BUILD ACTIONS 
+		    		
+		    			- CucumberREPORT 
+		    		5- Apply and SAVE 
+		    		6- Build NOW 	
+
+
+
+-------------------------------------------------------
+
+		    Q : How to run against different browsers? 
+
+		    	- It is not possible to run same test againt different browser parallely at the same time with one trigger
+
+		    Q: Solution is 
+		    	- Create different Jenkins- jobs 
+
+		    		- Smoke-Chrome
+		    		- Smoke-Firefox 
+
+		    	- Can we schedule these jobs at the same time ? 
+
+		    		- Yes
+
+
+		    We are gonna create new Jenkins job which includes 2 feature for smoke 
+
+
+
+
+
+---------------------------------------------------
+
+
+NOTE :	SQL Classes We are gonna Ultimate editon of Intellij 
+
+		if you dont have license contact with support 
+
+
+		- I will share couple of short about SQL 
+
+
+---------------------------------------------------
+	
+	DONT FORGET THE TERMINATE SELENUM GRID 
+
+	WE ARE GONNA USE JENKINS FOR DATABASE AND API CLASSES
+
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,112 @@
+
+1. What is Selenium Grid?
+    Selenium Grid allows you to run the Test cases parallel across multiple machines. i.e running multiple tests at the same time against different machines, different browsers, and different operating systems. 
+
+
+2. When can we go for Selenium-Grid?
+We can go for Selenium-Grid if we want to run the test cases faster or if we want to run them on different operating systems in parallel.
+
+3. Explain how selenium Grid works?
+    First Selenium Grid sent the tests to the hub and these tests will get redirected to nodes, which launch the browser and run the test. With entire test suite, it will run tests in parallel.
+
+4. Can we use Selenium-Grid for Performance Testing?
+    Yes, we can use selenium-grid for Performance Testing.
+
+
+5. How can we execute for large test suites or test suites that must be run in multiple environments?
+    We can execute test suites by using selenium-grid on multiple environments.
+
+
+6. What is the default maximum number of browsers that can run in parallel on the node?
+    Five is the default value assigned to a maximum number of browsers that can run in parallel on the node.
+
+7. What is the default port number assigned by the hub?
+    4444 is the default port used by the hub.
+
+8. What is the primary purpose of Selenium-Grid?
+    The primary purpose of Selenium-Grid is parallel Test Execution.
+
+9. What are the two main elements present in Selenium-Grid?
+    Hub and nodes are the two main elements in Selenium-Grid
+
+10. What is a hub?
+    Hub is a computer which is the central point where we can load our tests.
+
+11. How many hubs does selenium-grid have?
+    The selenium-grid has only one hub which is the master of the network.
+
+12. What is Selenium-Grid Node?
+    Nodes are selenium instances which are used to run tests used by the hub.
+
+13. How many nodes does selenium-grid have?
+    There can be one or more nodes in a selenium-grid.
+
+
+ ======== Q/A from previous batches ? ==============
+
+                Q: What is Selenium Grid?                                                   
+
+                    - tool for remote,parallel, cross-browser, cross-platform test execution
+
+                Q: Why do we need Selenium Grid?
+
+                    - We don't wanna run test cases locally
+                    - We need a structure to run our test cases in remote machines (virtual servers )
+                    - if you have more than one machine it will run parallel also
+
+                Q: Can we send test execution at the same time if we have more than one tester ?    
+
+                    Yes, if there is available nodes to run tests Hub will delegate available nodes to run tests
+
+                Q: Is the selenium Grid for only test purposes?
+
+                    - Yes it is a tool for testing and works with Selenium
+
+                Q: How many nodes do you have? 
+
+                    - Typical values 10,15,20,5... I have 10
+
+                Q: How do nodes work?
+
+                    - If there is more than one request for a node. It will run the first task. Others will wait until this node is available. Then it will run the rest of the tests one by one
+
+                Q: How do you divide your nodes for different platforms and browsers ?
+                    A: all our nodes are running chrome browser only. We are testing only on the chrome browser. Regarding test distribution, it happens automatically and controlled by selenium grid hub.
+
+
+                Q: Do you run your daily tests on Jenkins as well or only smoke and regression?
+                    A: I always run newly build tests on Jenkins, to make sure that tests are working fine not only on my local machine but on the server
+
+        
+
+                Q: Do we  as testers ever use pipeline type for any job in jenkins?
+                     A: Yes, we can setup same smoke, regression, etc job as a pipeline script. Also somteimes we need to do some updates as well 
+
+
+                Q: How can we debug when we run tests on server without seeing browser?
+                        A: By reading console log on Jenkins
+
+                Q: can one node work with more than one browser at a time?
+                            A: With docker - no, without - yes. 
+
+                          1 server (1vm) --> docker setup --> 1 docker container --> 1 node --> browser. You can create as many containers with nodes as many your server can handle.
+
+                          regular setup:
+
+                          1 server (1vm) --> 1 node --> up to at least 50 browsers. By default it's a 10 browser
+
+                Q: does jenkins server also needs to be strong or it is not necessary ?
+                        A: Jenkins will work on the smallest possible instance, but performance will be not good. 
+
+
+
+
+
+
+
+
+
+
+
+
+

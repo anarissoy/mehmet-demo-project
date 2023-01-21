@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Build'
+            }
+        }
+    
+    
+        stage('Test-Unit') {
+            steps {
+                echo 'Test-Unit'
+            }
+        }
+    
+    
+        stage('Test-Integration') {
+            steps {
+                echo 'Test-Integration'
+            }
+        }
+   
+
+        stage('Test-Functional') {
+            steps {
+                echo 'Test-Functional'
+            }
+        }
+    
+    
+        stage('Test-Performance') {
+            steps {
+                echo 'Test-Performance'
+            }
+        }
+    
+    
+        stage('Deploy') {
+            steps {
+                echo 'Deploy'
+            }
+        }
+   
+}}

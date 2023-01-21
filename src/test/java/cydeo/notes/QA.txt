@@ -1,0 +1,46 @@
+1. How can you report Jenkins? Or where do you do your reports ? 
+
+    I am using Cucumber BDD framework.I added "json:target/cucumber.json" plugin in my project 
+    to get report with the help of Jenkins Cucumber report plugin.( Jenkins cucumber report needs .json extension file to create report )
+
+2. How do you configure Git in Jenkins?
+    - Manage Jenkins --> Global Tool Configuration --> Git 
+
+    We are using JGit from Git Installer
+    JGit --> lightweight, pure Java library implementing the Git version control system
+
+3. How did you use Jenkins?
+    - In our company, we are using Jenkins for CI/CD tool. By using Jenkins we can schedule our smoke suite and regression suite. After that, we are getting an email from Jenkins every day for smoke test results.
+
+4. How did you connect it to your framework?
+    - I am using Jenkins UI for connecting my GitHub through our repository.
+    - Also, I know some of our teams have Jenkins files in their framework they can set up their Jenkins by using a pipeline with Groovy Lang
+
+5. How did you schedule tests and set up the emails?
+    - In Jenkins setup, we have the Build Triggers tab we are running our smoke test for each day periodically.
+    - For Email, we have Post-Build actions in Jenkins we are using this tab under this we can set up our email configuration which time who gets the email in which status.
+
+6. Explain your role in Jenkins
+    - My job is to create a smoke suite and regression suite and set up Jenkins for running these tests periodically.
+
+7. What CI/CD tool did you work with and how much were you involved? Did you do Jenkins setup and configuration yourself?
+    - We are using Jenkins for CI/CD. Yes, I did. I created a job item and setup my configuration before my job
+
+8. Can you walk me through how you set up your Jenkins task?
+    - Firstly I need to be sure set up about Global Tool Configuration. If these are setuped.
+    After that, I will create a new job item. And then I will use our repository URL which is our QA repository. And then I can set up my trigger type. For example, we are using Build periodically for smoke each day. And then we need to choose maven because our project is a maven project. After all, I set up my report which is a cucumber report by using the cucumber plugin. And the last one we are getting an email from Jenkins in order to see smoke results for each day.
+
+9. What do you know about Jenkins?
+    - Jenkins is a CI/CD tool that we are using for running our smoke test and regression test suits. We can get an email from Jenkins.
+
+10. Have you worked with CI/CD pipeline tools like Jenkins?
+    - Yes. I worked. We are using in order to run the smoke and regression tests suite and to get an email for each day before daily scrum.
+
+11.  Do we ever change branch from master to smth else when adding a project from GitHub to Jenkins? 
+    - Usually, we run tests from the master branch, because it has verified and stable code.
+
+    NOTE -->  Some of the companies runs their new branches before merging with master too 
+
+
+
+

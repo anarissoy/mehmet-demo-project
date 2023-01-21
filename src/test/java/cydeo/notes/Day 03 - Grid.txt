@@ -1,0 +1,195 @@
+
+
+DAY 03 --> Selenium Grid 
+
+
+	JENKINS vs Selenium GRID ? 
+
+		Jenkins       --> is deployment (CI/CD) tools
+		Selenium Grid --> is for remote test execution 
+
+
+	Q:  Is Using JENKINS the way to run our testcases ? 
+
+	    YES 
+			- JENKINS server resposiblity is managing deployment process (CI/CD).It is not the ideal solution 
+			- If the company does not have any server to run testcases YES still we can use JENKINS Servers
+
+				- If you run suites into Jenkins server it will consume resources from there.
+
+		NO 
+			- if the company has solution to isolate test case execution into another machine we will use that VM 	
+
+
+
+	We need to find a solution for solving this issue	
+
+		1. There can ready solutions
+			- BrowserStack 
+			- LambdaTest
+			- SauceLabs
+			- ... 
+			- .. 
+
+			NOTE : For this options you need pay as you used this server 
+
+					- Video 
+					- Good report 
+					- Screenshot 
+					- Different environment (OS , different devices, different browsers etc )	
+
+	    2. Selenium Grid --> If you are using Selenium in your framework we can use Selenium Grid too 
+	    	   			    Selenium --> Automation tools for browser 
+
+
+	    	- Using Virtual Machines (VM) 
+	    	- Docker --> Container engine 
+
+
+
+---- How execution will happen with Selenium Grid ? 
+
+		- Configuration.propertes file 
+			browser=remote-chrome 
+
+			remote-chrome will have all necessary connection information Selenium Grid VM to delegate your test cases execution 
+
+		- When you run your code from Jenkins or Local depends on your browser type it will send your request to Selenium Grid machine.In our case it is remote-chrome and it will run into Selenium Grid Server 
+		
+		- if it is browser=chrome it will run int o local machine	
+
+
+---- Where we are gonna get Selenium Grid Server IP addresses ? 
+		
+		- Ask your peers,qa lead or team mates to get this IP address to use in your framework. 
+
+    ======= SELENIUM GRID ========
+
+		SELENIUM GRID --> The Selenium Grid is a testing tool which allows us to run our tests on different machines against different browsers. It is a part of the Selenium Suite which specialize in running multiple tests across different browsers, operating system and machines.
+
+		Simple Term --> is used to delegate test execution in another machines
+
+		- We can connect multiple servers to do test executions.Servers can based MacOs, Windows, linux etc.Thus SG can support cross browser testing 
+
+		Q: What is the diffence between local and SG execution ? 
+
+			- Everyting is same only difference is test execution.Test executioin will happen into SG server
+			- Still we are gonna get report etc 
+
+
+		Selenium Grid has 2 main component 
+			
+			1- HUB 
+				 - HUB receives request from driver then delegates nodes to do test executions 
+				 - It works like Queen bee, manager etc 
+				 - There needs to be only one hub 
+			
+			2- NODE	
+
+				 - NODE isworker to execute test 
+				 - There can more than one nodes for execution
+				 - Woeker bees, worker etc 
+		
+		- HUB and NODE can be located into machine too 
+		- Those should Java and browser (that you want)
+		- HUB takes request NODE does execution 
+		- We need to connecct HUB and NODE each other to distribute test cases 
+
+
+		NOTE --> HUB and NODE is same file and this file has .jar extension 
+				 When we are creating nodes and hub we will a role as NODE/HUB 
+
+				 - selenium-server.jar
+
+        
+
+        WITH GRID 
+
+        	Remote Execution --> DriverClass --> RemoteWebDriver --> HUB --> NODE --> Browser Safari
+																	     --> NODE --> Browser Chrome
+																	     --> NODE --> Browser Firefox 
+
+
+
+        WITHOUT GRID 
+
+        	Local Execution --> DriverClass--> WebDriver --> Browser 
+
+
+
+
+
+        Q: 1 node to 1 browser?
+
+        	It depends 
+
+        		VM --> As a default 
+        				1 node may have 5 Chrome + 5 Firefox + 1 Internet Explorer 
+
+        				NOTE --> There is a way to change/adjust number of node 
+
+        		DOCKER --> One has one browser 		
+
+
+        Q: What is Selenium Grid ? 
+
+        	- tool for remote, parallel, cross-browser , cross platform test execution 
+
+        Q: Why we need ? 
+
+        	- We dont wanna consume local machine resources.So we need to find a VM to do test execution
+        	- To do fast 
+
+        Q: Assume that George and Adam working  in same company(different team ).They want to do smoke test? 
+
+        	- YES we can use same SG to do test executions with peers (same grid )
+
+        Q:How many nodes you have ?
+
+            - it can be 5,10,15,20 etc 
+            - it is good to say 5 -10 
+
+
+
+---- LINUX ---- 
+
+- Linux is modular OS.It comes without UI. 
+- It is faster than macOs, Windows etc 
+- Couple of distrubiton ---> Debian, Kali, Ubuntu, Redhat 
+
+
+Why companies using Linux ? 
+	- It is free
+	- Lightweight 
+	- It provides SSH (Secure Shell )connection (more secure)
+
+		- By default 22 port for SSH connection from Linux 
+		- SSH use 2 keys 
+
+			- private key --> gridserver.pem 
+			- public key  --> gridserver.pem 
+
+		- When you try to login it check your private key.If it is correct with public one it will give access
+
+
+
+Link for Docker and Containers --> https://www.notion.so/mehmetct/DOCKER-c7427ee21d5743fc9c8e1bfe4b91234a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

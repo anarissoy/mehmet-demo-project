@@ -1,0 +1,296 @@
+
+
+Day 01 -- CI /CD 
+
+	- Understand flow 
+	- Create one instance Jenkins
+	- Setup Jenkins
+	- Create simple jobs (running our test cases in remote machine)
+	- Take a report 
+
+
+
+	Continous Integration  / Continous Delivery / Deployment  --> Kind of journey for applications 
+
+
+	Why we are learning CI / CD ? 
+		- To deploy application we need to make sure applications works properly 
+		- We need to test to make sure application is working well 
+
+
+	
+	THere is a tool to handle/manage CI / CD process 
+		- Jenkins 
+			-- Open Source 
+			-- Free 
+
+			Another Tools for CI CD --> Github actions , TravisCI, TeamCity,Bamboo so on 
+
+
+	VCS(Version Control System --> Github) --> TEST ENVIRONMENT 
+
+		- Build 		---> It makes our application available as .jar file (ear > war > jar)
+		- Code Anlaysis ---> SonarQube has integration with Jenkins to check code quality, potential issues ,security leaks and so on 
+	
+		- Unit/Integration -->  It is not our job.Developers will do it  
+		
+		- We are not gonna involve this process.It is good to know 
+
+
+	TEST ENV -- STAGING ENV 
+
+
+		- Smoke : 
+			Application needs to be up and running 
+			In a nutshell --> DOing knock knock 
+
+			Example 
+				-- It is not too much 10-50 
+				-- It will take 10-30 mins  
+
+
+		- Regression : 
+			To make sure ENTIRE APP functionalities working properly 
+
+
+		- Performance : 
+
+			- It is good have dedicated ENV.Mostly they are using TEST ENV 
+			- JMETER , LoadRunner,Gatling are popular performance testing tools 
+
+
+		- Deploy : It will make available application for another environments 
+
+
+	STAGING ENV - PRODUCTION 
+	
+		Staging -->Pre Prod.Just one step before releasing application 
+
+		UAT --> It can be done from PO pr any other dedicated team 
+
+		Release --> It is business decision to make application available for real users  	
+
+
+PIPELINE 
+	--> Pipeline is a set of processes that take the code from version control and compile, build, test and deploy to production in automated fashion.
+
+
+	Q: What is JENKINS role in this pipeline ? 
+
+		- Jenskins is tool to manage CI / CD Process 
+
+
+    Q: Why we are using Jenkins ? 
+
+    	- It is open source , free 
+
+ 	Q: Creating this pipeline is our job ?  
+ 		
+ 		- no we are just gonna involve this process.It is inevitable  	
+
+
+ Continous Integration 
+
+ 	--> Continuous Integration is a process of automated build, unit testing, integration testing and code analysis.
+
+ 	VCS --> Test Env --> needs to automated. Rest of of them will trigger manually
+
+
+ 		--> Usually there is no func test.All test are doing for code level 
+ 		--> It is repetitive process to merge developrs code 
+ 		--> More bugs are caught/eliminated in this stage 
+ 		--> We are not involving this process (autmated stage)
+
+ Continous Delivery 
+
+ 	 --> Continuous Delivery is an automated build and execution of at unit and integration tests, execution of code analysis, functional tests and also deploying to any supported platform any time. Each time a build or a set of code passes the tests, it’s automatically deployed out to a staging environment.
+
+
+ 	 --> In this stage all functioanal tests are triggered automatically (Jenkins)
+
+    Q: Who is responsiblity to arreange triggers ? 
+
+     --> DevOps
+
+     --> If we following Continous Delivery still we need human intervention to release application 
+
+
+ Continous Deployment 
+
+ 	-->  Continuous deployment means that every change that you make, goes through the pipeline, and if it passes all the tests, it automatically gets deployed into production.
+
+ 	--> When developer push the code all pipeline/cycle will start
+ 	--> If one of the steps fails , it will turn back to VCS (Version Control System)
+ 	--> So all the process will done without any human intervantion 
+ 	--> It is faster than others (Continous Integration / Delivery )
+
+
+ Q: Who will do create this pipeline ? 
+
+ 	-> DevOps will do it 
+ 	-> Usually DEvops support multiple teams 
+
+
+---- Devops 
+	
+	-- It is a culture or methodolgy like agile / waterfall 
+	-- DevOps Engineer, Cloud Engineer ,System administrator 
+	-- It is not like 3 in 1 man 
+	-- Will write their scripts/code to create infrastructure	
+	
+	Q : What is infrastructure ?
+		- It is everything about deployment process 
+
+			- Database
+			- Jenkins 
+			- Server
+			- Application 
+			- Pipelines 
+
+
+
+--- SERVERS
+
+	- A server is a computer program or device that provides a service to another computer program and its user, also known as the client.
+	
+	Pyhsical Servers 
+		- This is a simple computer that is used for run software for server.
+		- We have only hardware and there is no UI (monitors)
+	
+
+	Virtual Servers 	
+	    - A virtual server is a virtual representation of a physical server. Like a physical server, a virtual server includes its own operating system and applications. These are kept separate from any other virtual servers that might be running on the physical server	
+
+
+
+	    Main Types of Cloud Computing
+
+	    On-Prem --> Server in your local.What ever you need you need to do it yourself 
+
+
+	  	IaaS --> Server in AWS that we create is an example for IaaS (EC2 Server)
+
+	  			 We have ready machine.We just need to install
+	  			 	- OS 
+	  			 	- Applications if we need data 
+	  			 	- Run Time softwares 
+
+	  	PaaS --> Platform as a Service 
+	  	
+	  			Get ready server to run your application
+	  			You need toı install application and data if you needed 	
+
+	  	SaaS --> Software as a Service 	 	
+
+	  		 	It is ready for you applications.Application already installed 
+	  		 	It is full service 
+
+
+
+	  AWS Terminologies 
+
+	  Regions --> Geopgraphical locaitons 
+
+	  AZ      --> Data centers / buildings into regions.if something bad happens (tornado,earthquake etc ), other buildnigs will not gonna effect and server will continue to run 
+
+	  EC2 --> Elastic Cloud Compute or EC2 is a foundational piece of AWS' cloud computing platform and is a service that provides servers for rent in the cloud.
+
+	  AMI ( Amazon Machine Image )  --> EC2 + Operating System + Applications 
+
+	  		  CydeoAMI 
+
+	  		  		--> EC2 
+	  		  		--> Windows 
+		  		  		--> Java 
+		  		  		--> Spartan --> 8000 --> API / DB 
+		  		  		--> Spartan Auth --> 7000 -->  API / DB
+		  		  		--> Oracle DB --> 1521 --> DB 
+		  		  		--> HR ORDS --> 1000 --> API 
+
+
+	
+	How to create EC2 instance ? 
+
+
+		- Launch instance 
+		- Name --> My Jenkins Server 
+		- AMI --> Cydeo + Hit ENTER --> Select CydeoLatestImage 
+		- Instance Type --> It is t2 micro as default (DONT CHANGE ANYTHING)
+		- Network 
+				- Edit 
+				- Create New Security Group 
+					- Jenkins-Server 
+					- Desc --> HR - Spartan - ORacle -Jenkins 
+
+				- Remove Rule --> RDP --> 3389 
+				- Add new Security Group ule 
+
+					port --> 8081 
+					Desc --> Jenkins 
+					Source --> Anywhere 
+						why anywhere --> it means we are able to connect that IP/application from enywhere 
+						since our ip is dynamic it not suggested us 
+
+        			Add other security rules based on their port number as we did in first security rule 
+
+        - Storage 
+        		- dont touch anything.As default it is defined as 30 GB 			
+
+
+    NOTE : 
+    
+    	DONT FORGET TO ENABLE MFA ---> mehmet_only --> short video from AWS 		
+
+
+    	Instance Status 
+
+    		- STOP 		--> Close the server.It means still you have this machine but you are not using it.So you still need to 				pay 
+    		- TERMINATE --> Releasing the machine.It means I am not usign this server anymore 
+    		- START     --> It will start your server if you stopped it 
+
+    	
+
+   JENKINS SETUP 
+
+   		Global Tool Configuration 
+   			- Dashboard 
+   			- Manage Jenkins 
+   			- Global Tool Configuration
+   				JDK 
+   					- Add JDK 
+   					- Uncheck Install Java
+   					- Name --> JAVA 
+   					- PATH --> C:\Program Files\Java\jdk-11.0.10     (Delete all trailing and leading spaces)
+
+   				Git 
+   					- Add JGit (JGIT is lightweight version of git for JAVA )	
+
+   				Maven 
+   					- Name--> M3
+   					- Install automatically--> 3.8.6  (We dont have it our AMI so we need to install )	
+
+   		Install Plugin 
+
+   				Available --> cucumber --> check it --> Download and intstall 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  		
+
+
+
